@@ -2,9 +2,11 @@
 
 namespace ui {
 
+unsigned int frame_count = 1;
 bool pre_draw_handler_t::operator()(igl::opengl::glfw::Viewer& viewer)
 {
     pd::deformable_mesh_t* model = solver->model();
+    
 
     if (!is_model_ready())
         return false;
@@ -36,7 +38,9 @@ bool pre_draw_handler_t::operator()(igl::opengl::glfw::Viewer& viewer)
             solver->prepare(physics_params->dt);
         }
 
-        solver->step(*fext, physics_params->solver_iterations);
+        solver->step(*fext, physics_params->solver_iterations, frame_count, experiment);
+
+        frame_count++;
 
         fext->setZero();
         viewer.data().clear();

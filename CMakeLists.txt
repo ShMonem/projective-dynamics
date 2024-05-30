@@ -79,6 +79,7 @@ PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include/pd/positional_constraint.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/pd/solver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/include/pd/strain_constraint.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/pd/utils.h
 
     # ui
     ${CMAKE_CURRENT_SOURCE_DIR}/include/ui/mouse_down_handler.h

@@ -10,6 +10,12 @@
 #include <iostream>
 #include <vector>
 
+// libigl
+#include<igl/writePLY.h>
+
+// storing data
+#include <filesystem>
+
 namespace pd {
 namespace detail {
 
@@ -51,6 +57,11 @@ class solver_t
     void set_dirty() { dirty_ = true; }
     void set_clean() { dirty_ = false; }
     bool ready() const { return !dirty_; }
+
+    bool record_ = true;
+    bool collect_snapshots() { return record_; };
+    std::string snapshots_directory = "../../../snapshots";
+
     void prepare(scalar_type dt)
     {
         dt_                   = dt;
@@ -87,7 +98,7 @@ class solver_t
         set_clean();
     }
 
-    void step(Eigen::MatrixXd const& fext, int num_iterations = 10)
+    void step(Eigen::MatrixXd const& fext, int num_iterations = 10, int frame = 0,std::string experiment = "")
     {
         auto const& constraints = model_->constraints();
         auto& positions         = model_->positions();
@@ -145,6 +156,16 @@ class solver_t
         Eigen::MatrixXd const qn_plus_1 = detail::unflatten(q);
         velocities                      = (qn_plus_1 - positions) * dt_inv;
         positions                       = qn_plus_1;
+
+        if (this->collect_snapshots())
+        {
+            std::cout << experiment;
+            std::filesystem::create_directory(snapshots_directory); // create directory if doesnt exist
+            igl::writePLY(
+                snapshots_directory + "/somemesh" + std::to_string(frame) + ".ply",
+                positions,
+                model_->faces());
+        }
     }
 
   private:

@@ -14,13 +14,19 @@ struct pre_draw_handler_t
     physics_params_t* physics_params;
     pd::solver_t* solver;
     Eigen::MatrixX3d* fext;
+    std::string const experiment;
 
     pre_draw_handler_t(
         std::function<bool()> is_model_ready,
         physics_params_t* physics_params,
         pd::solver_t* solver,
-        Eigen::MatrixX3d* fext)
-        : is_model_ready(is_model_ready), physics_params(physics_params), solver(solver), fext(fext)
+        Eigen::MatrixX3d* fext,
+        std::string experiment)
+        : is_model_ready(is_model_ready),
+          physics_params(physics_params),
+          solver(solver),
+          fext(fext),
+          experiment(experiment)
     {
     }
 
