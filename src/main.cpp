@@ -181,7 +181,7 @@ int main(int argc, char** argv)
                         static_cast<std::size_t>(bar_height),
                         static_cast<std::size_t>(bar_depth));
 
-                    experiment_name = experiment_name + "Bar_tet_";
+                    //experiment_name = experiment_name + "Bar_tet_";
                     reset_simulation_model(V, F, T, true);
                 }
 
@@ -230,7 +230,7 @@ int main(int argc, char** argv)
                     viewer.core().align_camera_center(model.positions());
                 }
                 ImGui::TreePop();
-                experiment_name = experiment_name + "_to3D_";
+                //experiment_name = experiment_name + "_to3D_";
             }
             std::string const vertex_count  = std::to_string(model.positions().rows());
             std::string const element_count = std::to_string(model.elements().rows());
