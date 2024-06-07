@@ -159,7 +159,7 @@ class solver_t
 
         if (this->collect_snapshots())
         {
-            std::cout << experiment;
+            //std::cout << experiment;
             std::filesystem::create_directory(snapshots_directory); // create directory if doesnt exist
             igl::writePLY(
                 snapshots_directory + "/somemesh" + std::to_string(frame) + ".ply",
@@ -174,6 +174,8 @@ class solver_t
     Eigen::SimplicialCholesky<Eigen::SparseMatrix<scalar_type>> cholesky_decomposition_;
     Eigen::MatrixXd A_;
     scalar_type dt_;
+
+    bool exp_set_;
 };
 
 } // namespace pd
