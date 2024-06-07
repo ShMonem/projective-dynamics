@@ -38,7 +38,7 @@ bool pre_draw_handler_t::operator()(igl::opengl::glfw::Viewer& viewer)
             solver->prepare(physics_params->dt);
         }
 
-        solver->step(*fext, physics_params->solver_iterations, frame_count, experiment);
+        solver->step(*fext, physics_params->solver_iterations, frame_count);
 
         frame_count++;
 

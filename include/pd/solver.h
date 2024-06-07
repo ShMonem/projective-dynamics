@@ -58,6 +58,8 @@ class solver_t
     void set_clean() { dirty_ = false; }
     bool ready() const { return !dirty_; }
 
+    bool is_experinent_set() const { return exp_set_; }
+
     bool record_ = true;
     bool collect_snapshots() { return record_; };
     std::string snapshots_directory = "../../../snapshots";
@@ -98,7 +100,7 @@ class solver_t
         set_clean();
     }
 
-    void step(Eigen::MatrixXd const& fext, int num_iterations = 10, int frame = 0,std::string experiment = "")
+    void step(Eigen::MatrixXd const& fext, int num_iterations = 10, int frame = 0)
     {
         auto const& constraints = model_->constraints();
         auto& positions         = model_->positions();

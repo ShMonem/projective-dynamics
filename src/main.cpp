@@ -31,7 +31,7 @@ int main(int argc, char** argv)
     ui::picking_state_t picking_state{};
     ui::physics_params_t physics_params{};
     pd::solver_t solver;
-    std::string experiment_name = "";
+    //std::string experiment_name = "";
 
     auto const is_model_ready = [&]() {
         return model.positions().rows() > 0;
@@ -98,7 +98,7 @@ int main(int argc, char** argv)
 
                 std::filesystem::path const mesh{filename};
 
-                experiment_name = experiment_name + mesh.stem().u8string() + "_ tri_"; 
+                //experiment_name = experiment_name + mesh.stem().u8string() + "_ tri_"; 
 
                 if (std::filesystem::exists(mesh) && std::filesystem::is_regular_file(mesh))
                 {
@@ -122,7 +122,7 @@ int main(int argc, char** argv)
                 std::string const filename = igl::file_dialog_open();
                 std::filesystem::path const mesh{filename};
 
-                experiment_name = experiment_name + mesh.stem().u8string() + "_tet_";
+                //experiment_name = experiment_name + mesh.stem().u8string() + "_tet_";
                 
                 if (std::filesystem::exists(mesh) && std::filesystem::is_regular_file(mesh))
                 {
@@ -158,7 +158,7 @@ int main(int argc, char** argv)
                     F.resize(1, 3);
                     F.row(0) = Eigen::RowVector3i{0, 1, 2};
 
-                    experiment_name = experiment_name + "to2D_";
+                    //experiment_name = experiment_name + "to2D_";
 
                     reset_simulation_model(V, F, F, false);
                 }
@@ -199,7 +199,7 @@ int main(int argc, char** argv)
                 {
                     auto [V, F] = geometry::get_simple_cloth_model(cloth_width, cloth_height);
 
-                    experiment_name = experiment_name + "Cloth_tri_";
+                    //experiment_name = experiment_name + "Cloth_tri_";
                     reset_simulation_model(V, F, F, true);
                 }
 
@@ -311,16 +311,16 @@ int main(int argc, char** argv)
                     if (is_constraint_type_active[0])
                     {
                         model.constrain_edge_lengths(physics_params.edge_constraint_wi);
-                        experiment_name = experiment_name + "constrain_edge_lengths_wi" +
-                                           float_to_str(physics_params.edge_constraint_wi);
+                        /*experiment_name = experiment_name + "constrain_edge_lengths_wi" +
+                                           float_to_str(physics_params.edge_constraint_wi);*/
                     }
                     if (is_constraint_type_active[1])
                     {
                         model.constrain_deformation_gradient(
                             physics_params.deformation_gradient_constraint_wi);
-                        experiment_name = experiment_name +
+                        /*experiment_name = experiment_name +
                             "constrain_deformation_gradient_wi" +
-                            float_to_str(physics_params.deformation_gradient_constraint_wi);
+                            float_to_str(physics_params.deformation_gradient_constraint_wi);*/
                     }
                     if (is_constraint_type_active[2])
                     {
@@ -329,18 +329,18 @@ int main(int argc, char** argv)
                             sigma_max,
                             physics_params.strain_limit_constraint_wi);
 
-                       experiment_name = experiment_name +
+                      /* experiment_name = experiment_name +
                             "constrain_strain_wi" +
                              float_to_str(physics_params.strain_limit_constraint_wi) +
                              "_min_" + float_to_str(sigma_min) +
-                             "_max_" + float_to_str(sigma_max);
+                             "_max_" + float_to_str(sigma_max);*/
                     }
                 }
                 std::string const constraint_count = std::to_string(model.constraints().size());
                 ImGui::BulletText(std::string("Constraints: " + constraint_count).c_str());
                 ImGui::TreePop();
 
-                experiment_name = experiment_name + "Constraints: " + constraint_count;
+                //experiment_name = experiment_name + "Constraints: " + constraint_count;
             }
             ImGui::InputFloat("Timestep", &physics_params.dt, 0.01f, 0.1f, "%.4f");
             ImGui::InputInt("Solver iterations", &physics_params.solver_iterations);
@@ -372,7 +372,7 @@ int main(int argc, char** argv)
     };
 
     viewer.callback_pre_draw =
-        ui::pre_draw_handler_t{is_model_ready, &physics_params, &solver, &fext, experiment_name};
+        ui::pre_draw_handler_t{is_model_ready, &physics_params, &solver, &fext};
 
     viewer.launch();
 
